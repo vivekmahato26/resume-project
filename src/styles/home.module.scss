@@ -1,0 +1,7 @@
+@import "./constants.scss";
+
+.container {
+    @include gridBox;
+    // grid-template-columns: 1fr 1fr;
+    
+}

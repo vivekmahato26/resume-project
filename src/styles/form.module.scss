@@ -1,0 +1,18 @@
+@import "./constants.scss";
+
+
+.container {
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+
+.container::-webkit-scrollbar {
+    background: transparent;
+}
+
+// .container::-webkit-scrollbar-thumb {
+//     background: #dedede;
+//     max-width: 0.5rem;
+//     border-radius: 20px;
+// }
