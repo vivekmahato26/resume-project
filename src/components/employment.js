@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import {
     Label,
     Input,
@@ -7,11 +7,12 @@ import {
     AccordionBody,
     AccordionHeader,
     AccordionItem,
+    Row,
+    Col
 } from 'reactstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItem, modifyItem, deleteItem } from '../redux/slice/employmentSlice';
+import { useDispatch } from 'react-redux';
 
-export default function Employment() {
+export default function Employment({ data }) {
     const [open, setOpen] = useState('1');
     const toggle = (id) => {
         if (open === id) {
@@ -21,89 +22,46 @@ export default function Employment() {
         }
     };
     const dispatch = useDispatch();
-    const employment = useSelector(state => state.employment.value);
-
+    const { addItem, modifyItem, deleteItem } = data.redux.actions;
     return (
         <div>
-            <h3>Employment History</h3>
+            <h3>{data.title}</h3>
+            <p>{data.desc}</p>
             <div>
-                <Button color='primary' onClick={() => dispatch(addItem())}>Add Employment</Button>
+                <Button color='primary' onClick={() => dispatch(addItem())}>Add Item</Button>
             </div>
             <Accordion open={open} toggle={toggle}>
-                {employment.map((emp,index) => (
-                    <AccordionItem>
-                        <AccordionHeader targetId={index}>Accordion Item 1</AccordionHeader>
-                        <AccordionBody accordionId={index}>
-                            <Label for="jobTitle">
-                                Job Title
-                            </Label>
-                            <Input
-                                id="jobTitle"
-                                name="jobTitle"
-                                placeholder="Job Title"
-                                type="text"
-                                onChange={(e) => { dispatch(modifyItem({ key: e.target.name, value: e.target.value, id: emp.id })) }}
-                            />
-                            <Label for="employer">
-                                Employer
-                            </Label>
-                            <Input
-                                id="employer"
-                                name="employer"
-                                placeholder="Employer"
-                                type="text"
-                                onChange={(e) => { dispatch(modifyItem({ key: e.target.name, value: e.target.value, id: emp.id })) }}
+                {data.redux.state.map((emp, index) => {
+                    let arr = [];
+                    for (const key in data.form) {
+                        arr.push(
+                            <Col md={data.form[key].col}>
+                                <Label for={data.form[key].name}>
+                                    {data.form[key].value}
+                                </Label>
+                                <Input
+                                    id={data.form[key].name}
+                                    name={data.form[key].name}
+                                    placeholder={data.form[key].value}
+                                    value={emp[key]}
+                                    type={data.form[key].type ? data.form[key].type : "text"}
+                                    onChange={(e) => { dispatch(modifyItem({ key: e.target.name, value: e.target.value, id: emp.id })) }}
+                                />
+                            </Col>
 
-                            />
-                            <Label for="start">
-                                Start Date
-                            </Label>
-                            <Input
-                                id="start"
-                                name="start"
-                                placeholder="MM/DD/YYYY"
-                                type="text"
-                                onChange={(e) => { dispatch(modifyItem({ key: e.target.name, value: e.target.value, id: emp.id })) }}
+                        )
+                    }
 
-                            />
-                            <Label for="end">
-                                End Date
-                            </Label>
-                            <Input
-                                id="end"
-                                name="end"
-                                placeholder="DD/MM/YYYY"
-                                type="text"
-                                onChange={(e) => { dispatch(modifyItem({ key: e.target.name, value: e.target.value, id: emp.id })) }}
-
-                            />
-
-                            <Label for="city">
-                                City
-                            </Label>
-                            <Input
-                                id="city"
-                                name="city"
-                                placeholder="City"
-                                type="text"
-                                onChange={(e) => { dispatch(modifyItem({ key: e.target.name, value: e.target.value, id: emp.id })) }}
-
-                            />
-                            <Label for="desc">
-                                Description
-                            </Label>
-                            <Input
-                                id="desc"
-                                name="desc"
-                                placeholder="Description"
-                                type="textarea"
-                                onChange={(e) => { dispatch(modifyItem({ key: e.target.name, value: e.target.value, id: emp.id })) }}
-
-                            />
-                        </AccordionBody>
-                    </AccordionItem>
-                ))
-                }
+                    return (
+                        <AccordionItem>
+                            <AccordionHeader targetId={index}>{emp.jobTitle}</AccordionHeader>
+                            <AccordionBody accordionId={index}>
+                                {arr.map(e => e)}
+                                <Button color='danger' onClick={() => dispatch(deleteItem(emp.id))}>Delete</Button>
+                            </AccordionBody>
+                        </AccordionItem>
+                    )
+                })}
             </Accordion >
         </div >
     )

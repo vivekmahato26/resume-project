@@ -23,10 +23,10 @@ export default function PersonalDetails() {
     const [value, setValue] = React.useState(dayjs(date));
 
     const handleUpload = async (event) => {
-        const url = "url";
+        const url = "https://api.cloudinary.com/v1_1/dwdy4lewd/image/upload";
         const formData = new FormData();
 
-        formData.append("upload_preset", "upload_preset");
+        formData.append("upload_preset", "resume");
         const file = event.target.files;
         formData.append("file", file[0]);
 

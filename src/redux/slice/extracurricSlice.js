@@ -1,20 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {v4 as uuidv4} from "uuid"
 
-const employmentSlice = createSlice({
-    name:"Employment",
+const extraCurricSlice = createSlice({
+    name:"Extra Curriculums",
     initialState: {
         value: []
     },
     reducers: {
         addItem: (state,action) => {
            state.value.push({
-            jobTitle: "Add Title",
-            employer: "",
+            name: "Add Title",
+            organisation: "",
+            city: "",
             start: "",
             end: "",
-            city: "",
-            desc:"",
+            desc: "",
             id: uuidv4().split("-").join("")
            })
         },
@@ -38,6 +38,6 @@ const employmentSlice = createSlice({
 })
 
 
-export const {addItem,modifyItem,deleteItem} = employmentSlice.actions;
+export const {addItem,modifyItem,deleteItem} = extraCurricSlice.actions;
 
-export default employmentSlice;
+export default extraCurricSlice;

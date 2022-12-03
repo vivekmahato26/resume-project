@@ -7,7 +7,7 @@ export default function Home() {
     return (
         <div className={styles.container}>
             <Form />
-            {/* <Resume /> */}
+            <Resume />
         </div>
     )
 }
