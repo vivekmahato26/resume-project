@@ -12,6 +12,8 @@ import {
 } from 'reactstrap';
 import { useDispatch } from 'react-redux';
 
+import Editor from './editor';
+
 export default function Employment({ data }) {
     const [open, setOpen] = useState('1');
     const toggle = (id) => {
@@ -39,14 +41,14 @@ export default function Employment({ data }) {
                                 <Label for={data.form[key].name}>
                                     {data.form[key].value}
                                 </Label>
-                                <Input
+                                {data.form[key].type === "textarea" ? <Editor chnageEvent={{modifyItem,input:data.form[key],id: emp.id}} /> :<Input
                                     id={data.form[key].name}
                                     name={data.form[key].name}
                                     placeholder={data.form[key].value}
                                     value={emp[key]}
                                     type={data.form[key].type ? data.form[key].type : "text"}
                                     onChange={(e) => { dispatch(modifyItem({ key: e.target.name, value: e.target.value, id: emp.id })) }}
-                                />
+                                />}
                             </Col>
 
                         )

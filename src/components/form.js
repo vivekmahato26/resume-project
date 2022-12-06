@@ -186,9 +186,6 @@ export default function Form() {
         <div className={styles.container}>
             <p>Title</p>
             <p>Language</p>
-            {/* <Progress
-                value={50}
-            /> */}
             <LinearProgress variant="determinate" value={50} />
             <PersonalDetails />
             <Employment data={employment} />

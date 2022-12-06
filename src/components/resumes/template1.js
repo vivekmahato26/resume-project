@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 export default function Template1() {
     const personalDetails = useSelector((state) => state.personalDetails.value);
+    const employment = useSelector((state) => state.employment.value);
     return (
         <div>
             <p>{personalDetails.firstName} {personalDetails.lastName}</p>
@@ -20,7 +21,13 @@ export default function Template1() {
                     <p>{personalDetails.phone}</p>
                     <p>{personalDetails.email}</p>
                 </div>
-                <div></div>
+                <div>
+                    {employment.map(e=>(
+                        <>
+                        {e.decs}
+                        </>
+                    ))}
+                </div>
             </div>
         </div>
     )
